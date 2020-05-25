@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime;
 
 namespace DnDRoller
 {
@@ -22,13 +23,13 @@ namespace DnDRoller
 
         /// Rolls a specified die from the Dice List
         /// indexing starts at 0
-        public int RollDie(int die)
+        public int RollDie(int dieIndex)
         {
             int roll = -1;
 
-            if (die > 0 && die < this.Dice.Count)
+            if (dieIndex > 0 && dieIndex < this.Dice.Count)
             {
-                roll = this.Dice[die].Roll();
+                roll = this.Dice[dieIndex].Roll();
             }
 
             return roll;
@@ -39,7 +40,8 @@ namespace DnDRoller
         {
             int rollTotal = 0;
 
-            foreach (var die in Dice) {
+            foreach (var die in this.Dice)
+            {
                 rollTotal += die.Roll();
             }
 

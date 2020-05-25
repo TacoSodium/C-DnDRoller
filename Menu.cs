@@ -36,7 +36,7 @@ namespace DnDRoller
                     ViewPlayerInfo();
                     break;
                 default:
-                    Console.WriteLine("ERROR. Please enter a valid selection (1, 2 or 3)");
+                    Console.WriteLine("Please enter a valid selection (1, 2 or 3)");
                     Start();
                     break;
 
@@ -61,7 +61,7 @@ namespace DnDRoller
                     player2.AddNewDie(sideSelection);
                     break;
                 default:
-                    Console.WriteLine("ERROR. Please enter a valid player (1 or 2)");
+                    Console.WriteLine("Please enter a valid player (1 or 2)");
                     AddDiceMenu();
                     break;
             }
@@ -71,19 +71,58 @@ namespace DnDRoller
 
         public void RollDice()
         {
+            // counter foreach
+            int i = 0;
+
             Console.WriteLine("Roll dice");
             Console.Write("Choose a player: ");
             var userSelection = Console.ReadLine();
 
-            Console.Write("Choose the die: ");
-            var dieSelection = int.Parse(Console.ReadLine());
-
-            switch (userSelection) {
+            switch (userSelection)
+            {
                 case "1":
-                    Console.WriteLine($"{player1.Name} rolled {player1.RollDie(dieSelection)}");
+                    foreach (var die in player1.Dice)
+                    {
+                        Console.WriteLine($"D{die.NumOfSides} = {i}");
+                        i++;
+                    }
                     break;
                 case "2":
-                    Console.WriteLine($"{player2.Name} rolled {player2.RollDie(dieSelection)}");
+                    foreach (var die in player2.Dice)
+                    {
+                        Console.WriteLine($"D{die.NumOfSides} = {i}");
+                    }
+                    break;
+                default:
+                    Console.WriteLine("Please enter a valid player (1 or 2)");
+                    break;
+
+            }
+
+            Console.Write("Choose die: ");
+            int dieSelection = int.Parse(Console.ReadLine());
+
+            switch (userSelection)
+            {
+                case "1":
+                    if (dieSelection >= 0 && dieSelection < player1.Dice.Count)
+                    {
+                        Console.WriteLine($"{player1.Name} rolled {player1.RollDie(dieSelection)}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Please enter a valid index");
+                    }
+                    break;
+                case "2":
+                    if (dieSelection >= 0 && dieSelection < player2.Dice.Count)
+                    {
+                        Console.WriteLine($"{player2.Name} rolled {player2.RollDie(dieSelection)}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Please enter a valid index");
+                    }
                     break;
                 default:
                     Console.WriteLine("Please enter a valid player (1 or 2)");
